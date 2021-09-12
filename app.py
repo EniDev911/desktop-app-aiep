@@ -49,7 +49,7 @@ def signin():
         if e1.get()=='':
             e1.insert(0,'Usuario')
 
-    e1 =Entry(f1,width=25,fg='black',border=0,bg='white')
+    e1=Entry(f1,width=25,fg='black',border=0,bg='white')
     e1.config(font=('Microsoft YaHei UI Light',11, ))
     e1.bind("<FocusIn>", on_enter)
     e1.bind("<FocusOut>", on_leave)
@@ -66,7 +66,7 @@ def signin():
         if e2.get()=='':
             e2.insert(0,'Contraseña')
 
-    e2 =Entry(f1,width=21,fg='black',border=0,bg='white')
+    e2=Entry(f1,width=21,fg='black',border=0,bg='white')
     e2.config(font=('Microsoft YaHei UI Light',11, ))
     e2.bind("<FocusIn>", on_enter)
     e2.bind("<FocusOut>", on_leave)
@@ -78,7 +78,6 @@ def signin():
 
     # mecanismo ------------------------------------------------
     def signin_cmd():
-
         file=open('datausers.txt','r')
         d=file.read()
         r=ast.literal_eval(d)
@@ -143,9 +142,9 @@ def signup():
     #-----------------------------------------------------------
 
     #---------------|input password|-----------------------------
-    def on_enter(e=None):
+    def on_enter(e):
         e2.delete(0, 'end')
-    def on_leave(e=None):
+    def on_leave(e):
         if e2.get()=='':
             e2.insert(0,'Contraseña')
 
@@ -161,11 +160,11 @@ def signup():
 
 
     #---------------|input confirmar password|-------------------
-    def on_enter(e=None):
-        e2.delete(0, 'end')
-    def on_leave(e=None):
-        if e2.get()=='':
-            e2.insert(0,'Confirmar contraseña')
+    def on_enter(e):
+        e3.delete(0, 'end')
+    def on_leave(e):
+        if e3.get()=='':
+            e3.insert(0,'Confirmar contraseña')
 
     e3 = Entry(f1, width=21, fg='black', border=0, bg='white')
     e3.config(font=('Microsoft YaHei UI Light',11, ))
@@ -181,14 +180,14 @@ def signup():
     def signup_cmd():
         key=e1.get()
         value=e2.get()
-        value2=e2.get()
-
+        value2=e3.get()
+        
         if value==value2:
-            file=open('datausers.txt','r+')
+            file=open('datasheet.txt','r+')
             d=file.read()
             r=ast.literal_eval(d)
             print(r)
-
+            
 
             dict2={key:value}
             print(dict2)
@@ -197,15 +196,16 @@ def signup():
             file.truncate(0)
             file.close()
             print(r)
-            file=open('datausers.txt', 'w')
+            file=open('datasheet.txt','w')
             w=file.write(str(r))
-
-            messagebox.showinfo("","Registro exitoso")
-
+             
+            messagebox.showinfo("","     successfully signed up     ")
+            
         else:
-            messagebox.showinfo("Re-intentar", "La contraseña no es la misma")
+            messagebox.showwarning('try again', 'password should match ')
 
-        # ===================================================================
+
+    # ===================================================================
 
     Button(f1, width=39, pady=7, text='Registrarse', bg='#ff4f5a',fg='white',
             border=0, command=signup_cmd).place(x=35, y=204+60)
