@@ -23,6 +23,7 @@ screen_width = w.winfo_screenwidth()
 screen_height = w.winfo_screenheight()
 x_coordinate = (screen_width/2)-(width_window/2)
 y_coordinate = (screen_height/2)-(height_window/2)
+w.resizable(0,0)
 w.geometry("%dx%d+%d+%d"%(width_window, height_window, x_coordinate, y_coordinate))
 
 
@@ -40,19 +41,21 @@ def signin():
     img1 = ImageTk.PhotoImage(Image.open("signin.png"))
     Label(signin_win, image=img1, border=0, bg='white').place(x=50,y=50)
 
-    l2=Label(signin_win,text="Sign in",fg='#ff4f5a',bg='white')
+    l2=Label(signin_win,text="Iniciar Sesión",fg='#ff4f5a',bg='white')
     l2.config(font=('Microsoft YaHei UI Light',23, 'bold'))
-    l2.place(x=600,y=60)
+    l2.place(x=550,y=60)
 
     #---------------|input usuario|------------------------------
     def on_enter(e):
-        e1.delete(0,'end')
+        if e1.get()=='Usuario':
+            e1.delete(0,'end')
     def on_leave(e):
         if e1.get()=='':
             e1.insert(0,'Usuario')
 
     e1=Entry(f1,width=25,fg='black',border=0,bg='white')
     e1.config(font=('Microsoft YaHei UI Light',11, ))
+    e1.config(insertbackground='#ff4f5a')
     e1.bind("<FocusIn>", on_enter)
     e1.bind("<FocusOut>", on_leave)
     e1.insert(0,'Usuario')
@@ -81,6 +84,7 @@ def signin():
 
     e2=Entry(f1,width=21,fg='black',border=0,bg='white')
     e2.config(font=('Microsoft YaHei UI Light',11, ))
+    e2.config(insertbackground='#ff4f5a')
     e2.bind("<FocusIn>", on_enter)
     e2.bind("<FocusOut>", on_leave)
     e2.insert(0,'Contraseña')
@@ -160,15 +164,19 @@ def signup():
             e2.delete(0, 'end')
             e2.config(show=u'\u25CF')
         else:
-            e2.config(show=u'\u25CF')    
+            e2.config(show=u'\u25CF')
+
     def on_leave(e):
         if e2.get()=='':
+            e2.config(show="")
             e2.insert(0,'Contraseña')
+        else:
+            e2.config(show=u'\u25CF')
 
     e2 = Entry(f1, width=21, fg='black', border=0, bg='white')
     e2.config(font=('Microsoft YaHei UI Light',11, ))
     e2.bind("<FocusIn>", on_enter)
-    e2.bind("FocusOut", on_leave)
+    e2.bind("<FocusOut>", on_leave)
     e2.insert(0, 'Contraseña')
     e2.place(x=30, y=130)
     # La línea que identifica al Entry Contraseña
@@ -183,10 +191,14 @@ def signup():
             e3.config(show=u'\u25CF')
         else:
             e3.config(show=u'\u25CF')
-            
+
     def on_leave(e):
         if e3.get()=='':
+            e3.config(show="")
             e3.insert(0,'Confirmar contraseña')
+        else:
+            e3.config(show=u'\u25CF')
+            
 
     e3 = Entry(f1, width=21, fg='black', border=0, bg='white')
     e3.config(font=('Microsoft YaHei UI Light',11, ))
