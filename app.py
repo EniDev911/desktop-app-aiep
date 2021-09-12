@@ -13,6 +13,8 @@ from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
 import ast
+#import main
+
 
 w=Tk()
 width_window = 925
@@ -61,10 +63,21 @@ def signin():
 
     #----------------|input password|---------------------------
     def on_enter(e):
-        e2.delete(0,'end')
+        if e2.get()=="Contraseña":
+            e2.config(show=u'\u25CF')
+            e2.delete(0,'end')
+        else:
+            e2.config(show=u'\u25CF')
+
+
+
     def on_leave(e):
         if e2.get()=='':
+            e2.config(show="")
             e2.insert(0,'Contraseña')
+        else:
+            e2.config(show=u'\u25CF')
+
 
     e2=Entry(f1,width=21,fg='black',border=0,bg='white')
     e2.config(font=('Microsoft YaHei UI Light',11, ))
@@ -78,7 +91,7 @@ def signin():
 
     # mecanismo ------------------------------------------------
     def signin_cmd():
-        file=open('datausers.txt','r')
+        file=open('datasheet.txt','r')
         d=file.read()
         r=ast.literal_eval(d)
         file.close()
@@ -90,7 +103,6 @@ def signin():
         if key in r.keys() and value==r[key]:
             messagebox.showinfo("","Inicio de sesión correcto")
             w.destroy()
-            import main
         else:
             messagebox.showwarning('Re-intentar', 'Usuario o contraseña invalido')
 
@@ -126,6 +138,7 @@ def signup():
     #---------------|input usuario|-----------------------------
     def on_enter(e=None):
         e1.delete(0, 'end')
+
     def on_leave(e):
         if e1.get()=='':
             e1.insert(0,'Usuario')
@@ -143,7 +156,11 @@ def signup():
 
     #---------------|input password|-----------------------------
     def on_enter(e):
-        e2.delete(0, 'end')
+        if e2.get()=='Contraseña':
+            e2.delete(0, 'end')
+            e2.config(show=u'\u25CF')
+        else:
+            e2.config(show=u'\u25CF')    
     def on_leave(e):
         if e2.get()=='':
             e2.insert(0,'Contraseña')
@@ -161,7 +178,12 @@ def signup():
 
     #---------------|input confirmar password|-------------------
     def on_enter(e):
-        e3.delete(0, 'end')
+        if e3.get()=='Confirmar contraseña':
+            e3.delete(0, 'end')
+            e3.config(show=u'\u25CF')
+        else:
+            e3.config(show=u'\u25CF')
+            
     def on_leave(e):
         if e3.get()=='':
             e3.insert(0,'Confirmar contraseña')
@@ -199,16 +221,16 @@ def signup():
             file=open('datasheet.txt','w')
             w=file.write(str(r))
              
-            messagebox.showinfo("","     successfully signed up     ")
+            messagebox.showinfo("","Registro exitoso")
             
         else:
-            messagebox.showwarning('try again', 'password should match ')
+            messagebox.showwarning('Re-intentar', 'Contraseñas deben coincidir')
 
 
     # ===================================================================
 
     Button(f1, width=39, pady=7, text='Registrarse', bg='#ff4f5a',fg='white',
-            border=0, command=signup_cmd).place(x=35, y=204+60)
+            border=0, command=signup_cmd, cursor='hand2').place(x=35, y=204+60)
 
 
     l1=Label(f1,text="¿Ya tienes una cuenta?",fg="black",bg='white')
